@@ -1,0 +1,22 @@
+---
+- name: "Create vagrant user"
+  user:
+    name: vagrant
+    #sudo dnf install python2-passlib
+    #python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.using(rounds=5000).hash(getpass.getpass())"
+    #vagrant
+    password: '$6$fvFdy7J0AlqF8AJq$AF9TMjxQpVfir5tSL4epiMV4SRAIeriXA.jM3B2OLgkMPcjwFTHwqf356X..EEX5E4tvzDjrYrJLNafyj0rUH0'
+    state: present
+
+- name: "Set vagrant insecure public key"
+  authorized_key:
+    user: vagrant
+    state: present
+    key: "{{ item }}"
+  with_file:
+    - vagrant.pub
+
+- lineinfile:
+    path: /etc/sudoers
+    state: present
+    line: 'vagrant ALL=(ALL) NOPASSWD: ALL'

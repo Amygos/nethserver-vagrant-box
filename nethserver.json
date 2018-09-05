@@ -1,0 +1,37 @@
+{
+    "builders": [
+        {
+            "boot_command": [
+                "<down><enter><enter>"
+            ],
+            "boot_wait": "12s",
+            "disk_size": 40960,
+            "guest_os_type": "RedHat_64",
+            "headless": true,
+            "iso_checksum": "cdb9e302d563d5abb500286946e88e33ec81058d",
+            "iso_checksum_type": "sha1",
+            "iso_url": "https://sourceforge.net/projects/nethserver/files/nethserver-7.5.1804-x86_64.iso/download",
+            "shutdown_command": "/sbin/halt -h -p",
+            "ssh_password": "Nethesis,1234",
+            "ssh_port": 22,
+            "ssh_username": "root",
+            "ssh_wait_timeout": "10000s",
+            "type": "virtualbox-iso"
+        }
+    ],
+    "provisioners":[{
+	    "type": "ansible",
+	    "playbook_file": "ansible/playbook.yml"
+    }],
+    "post-processors": [[
+        {
+            "output": "build/nethserver-7.5.1804-x86_64.box",
+            "type": "vagrant"
+        },
+      {
+        "type": "vagrant-cloud",
+        "box_tag": "nethserver/7",
+        "version": "1804.01"
+      }
+   ]]
+}

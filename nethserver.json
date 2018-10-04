@@ -1,37 +1,80 @@
 {
-    "builders": [
-        {
-            "boot_command": [
-                "<down><enter><enter>"
-            ],
-            "boot_wait": "12s",
-            "disk_size": 40960,
-            "guest_os_type": "RedHat_64",
-            "headless": true,
-            "iso_checksum": "cdb9e302d563d5abb500286946e88e33ec81058d",
-            "iso_checksum_type": "sha1",
-            "iso_url": "https://sourceforge.net/projects/nethserver/files/nethserver-7.5.1804-x86_64.iso/download",
-            "shutdown_command": "/sbin/halt -h -p",
-            "ssh_password": "Nethesis,1234",
-            "ssh_port": 22,
-            "ssh_username": "root",
-            "ssh_wait_timeout": "10000s",
-            "type": "virtualbox-iso"
-        }
-    ],
-    "provisioners":[{
-	    "type": "ansible",
-	    "playbook_file": "ansible/playbook.yml"
-    }],
-    "post-processors": [[
-        {
-            "output": "build/nethserver-7.5.1804-x86_64.box",
-            "type": "vagrant"
-        },
+  "variables":
+    {
+      "version": "1804.01",
+      "iso_url": "https://sourceforge.net/projects/nethserver/files/nethserver-7.5.1804-x86_64.iso/download",
+      "iso_checkmsum": "cdb9e302d563d5abb500286946e88e33ec81058d"
+    },
+  "builders": [
+    {
+      "boot_command": ["<down><enter><enter>"],
+      "boot_wait": "12s",
+      "disk_size": 40960,
+      "guest_os_type": "RedHat_64",
+      "headless": true,
+      "iso_checksum": "{{user `iso_checkmsum`}}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{user `iso_url`}}",
+      "shutdown_command": "/sbin/halt -h -p",
+      "ssh_password": "Nethesis,1234",
+      "ssh_port": 22,
+      "ssh_username": "root",
+      "ssh_wait_timeout": "10000s",
+      "type": "virtualbox-iso",
+      "name": "nethserver"
+    },
+    {
+      "boot_command": ["<down><enter><enter>"],
+      "boot_wait": "12s",
+      "disk_size": 40960,
+      "guest_os_type": "RedHat_64",
+      "headless": true,
+      "iso_checksum": "{{user `iso_checkmsum`}}",
+      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{user `iso_url`}}",
+      "shutdown_command": "/sbin/halt -h -p",
+      "ssh_password": "Nethesis,1234",
+      "ssh_port": 22,
+      "ssh_username": "root",
+      "ssh_wait_timeout": "10000s",
+      "type": "virtualbox-iso",
+      "name": "nethserver-testing"
+    }
+  ],
+  "provisioners":[
       {
-        "type": "vagrant-cloud",
-        "box_tag": "nethserver/7",
-        "version": "1804.01"
+        "type": "ansible",
+        "playbook_file": "ansible/playbook.yml",
+        "host_alias": "{{build_name}}"
       }
-   ]]
+    ],
+  "post-processors": [
+      [
+        {
+          "output": "build/nethserver-7.5.1804-x86_64.box",
+          "type": "vagrant",
+          "only": ["nethserver"]
+        },
+        {
+          "type": "vagrant-cloud",
+          "box_tag": "nethserver/7",
+          "version": "{{user `version`}}",
+          "only": ["nethserver"]
+        }
+      ],
+      [
+        {
+          "output": "build/nethserver-testing-7.5.1804-x86_64.box",
+          "type": "vagrant",
+          "only": ["nethserver-testing"]
+        },
+        {
+          "type": "vagrant-cloud",
+          "box_tag": "nethserver/7-testing",
+          "version": "{{user `version`}}",
+          "only": ["nethserver-testing"]
+        }
+      ]
+    ]
 }

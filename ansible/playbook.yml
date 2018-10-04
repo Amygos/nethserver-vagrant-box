@@ -1,3 +1,11 @@
 - hosts: all
   roles:
     - role: vagrant-box
+
+- hosts: nethserver-testing
+  tasks:
+    - name: Install yum-utils
+      yum:
+        name: yum-utils
+    - name: Enable testing repository
+      command: "yum-config-manager --enable nethserver-testing"

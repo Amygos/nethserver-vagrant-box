@@ -1,4 +1,4 @@
-# Nethserver official Vagrant boxes
+# Nethserver official Vagrant box
 
 https://app.vagrantup.com/nethserver
 
@@ -15,10 +15,7 @@ The box contain a vanilla [unattended installation](http://docs.nethserver.org/e
 1. Create new vagrant box : https://app.vagrantup.com/boxes/new
 1. Generate new token: https://app.vagrantup.com/settings/security
 1. Export `VAGRANT_CLOUD_TOKEN` env variable: `# export VAGRANT_CLOUD_TOKEN="<TOKEN>"`
-1. Build and upload vagrant box:
-	* `$ packer build -only=nethserver nehtserver.json` for nethserver stable
-	* `$ packer build -only=nethserver-testing nehtserver.json` for nethserver testing
-	* `$ packer build nehtserver.json` for both
+1. Build and upload vagrant box: `$ packer build nehtserver.json` for both
 
 ## Release a new version
 
@@ -35,9 +32,9 @@ Edit `variables` section of  `nehtserver.json` file
 	* `version` with the new version
 	* `iso_url` with the new url of iso file
 	* `iso_checkmsum` with the new url checkmsum of the iso file
-1. Build and upload new vagrant boxes: `$ packer build nehtserver.json`
+1. Build and upload new vagrant box: `$ packer build nehtserver.json`
 
-## Use the boxes
+## Use the box
 Install [Vagrant](https://www.vagrantup.com/downloads.html) and create base `Vagrantfile` file with:
 ```shell
 $ vagrant init

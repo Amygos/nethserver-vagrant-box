@@ -20,8 +20,7 @@
       "ssh_port": 22,
       "ssh_username": "root",
       "ssh_wait_timeout": "10000s",
-      "type": "virtualbox-iso",
-      "name": "nethserver"
+      "type": "virtualbox-iso"
     }
   ],
   "provisioners":[
@@ -35,14 +34,12 @@
       [
         {
           "output": "build/nethserver-7.5.1804-x86_64.box",
-          "type": "vagrant",
-          "only": ["nethserver"]
+          "type": "vagrant"
         },
         {
           "type": "vagrant-cloud",
           "box_tag": "nethserver/7",
-          "version": "{{user `version`}}",
-          "only": ["nethserver"]
+          "version": "{{user `version`}}"
         }
       ]
     ]

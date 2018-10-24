@@ -21,6 +21,21 @@
       "ssh_username": "root",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso"
+    },
+    {
+      "boot_command": ["<down><enter><enter>"],
+      "boot_wait": "12s",
+      "disk_size": 40960,
+      "headless": true,
+      "iso_checksum": "{{user `iso_checkmsum`}}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{user `iso_url`}}",
+      "shutdown_command": "/sbin/halt -h -p",
+      "ssh_password": "Nethesis,1234",
+      "ssh_port": 22,
+      "ssh_username": "root",
+      "ssh_wait_timeout": "10000s",
+      "type": "qemu"
     }
   ],
   "provisioners":[
@@ -33,7 +48,7 @@
   "post-processors": [
       [
         {
-          "output": "build/nethserver-7.5.1804-x86_64.box",
+          "output": "build/nethserver7-{{build_name}}-7.5.1804-x86_64.box",
           "type": "vagrant"
         },
         {

@@ -1,3 +1,8 @@
 - hosts: all
   roles:
     - role: vagrant-box
+  post_tasks:
+    - name: Remove yum uuid
+      file:
+        path: /var/lib/yum/uuid
+        state: absent

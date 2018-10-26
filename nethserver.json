@@ -1,7 +1,7 @@
 {
   "variables":
     {
-      "version": "1804.01",
+      "version": "1804.02",
       "iso_url": "https://sourceforge.net/projects/nethserver/files/nethserver-7.5.1804-x86_64.iso/download",
       "iso_checkmsum": "cdb9e302d563d5abb500286946e88e33ec81058d"
     },

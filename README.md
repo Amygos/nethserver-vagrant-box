@@ -37,11 +37,7 @@ Edit `variables` section of  `nehtserver.json` file
 ## Use the box
 Install [Vagrant](https://www.vagrantup.com/downloads.html) and create base `Vagrantfile` file with:
 ```shell
-$ vagrant init
-```
-Set Netheserver image in Vagrantfile:
-```ruby
-  config.vm.box = "nethserver/7"
+$ vagrant init nethserver/7
 ```
 Start the box:
 ```shell
@@ -51,4 +47,3 @@ Log in to the machine:
 ```shell
 $ vagrant ssh
 ```
-You can also view the provided [Vagrantfile](Vagrantfile) as reference.

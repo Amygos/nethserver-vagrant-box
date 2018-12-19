@@ -1,9 +1,9 @@
 {
   "variables":
     {
-      "version": "1810.01",
-      "iso_url": "https://sourceforge.net/projects/nethserver/files/nethserver-7.6.1810-x86_64.iso/download",
-      "iso_checkmsum": "2195049bebfda53e264faffe23e5b8c72fc39f5b"
+      "version": "6.10.01",
+      "iso_url": "https://sourceforge.net/projects/nethserver/files/nethserver-6.10-x86_64.iso/download",
+      "iso_checkmsum": "47a53e045d431a1b77a83e85ea43af8da5f26ca7"
     },
   "builders": [
     {
@@ -11,7 +11,7 @@
       "boot_wait": "12s",
       "disk_size": 40960,
       "guest_os_type": "RedHat_64",
-      "headless": true,
+      "headless": false,
       "iso_checksum": "{{user `iso_checkmsum`}}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{user `iso_url`}}",
@@ -37,25 +37,27 @@
       "ssh_wait_timeout": "10000s",
       "type": "qemu"
     }
+
   ],
-  "provisioners":[
-      {
+  "provisioners":
+   [{
         "type": "ansible",
         "playbook_file": "ansible/playbook.yml",
-        "host_alias": "{{build_name}}"
-      }
-    ],
+        "host_alias": "nethserver6"
+        
+    }],
   "post-processors": [
       [
         {
-          "output": "build/nethserver7-{{build_name}}-7.6.1810-x86_64.box",
+          "output": "build/nethserver6-{{build_name}}-6.10-x86_64.box",
           "type": "vagrant"
         },
         {
           "type": "vagrant-cloud",
-          "box_tag": "nethserver/7",
+          "box_tag": "nethserver/6",
           "version": "{{user `version`}}"
         }
+
       ]
     ]
 }
